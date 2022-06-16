@@ -3,7 +3,7 @@ import boto3
 
 #query = "SELECT * FROM ('stg-authdatadb'.sgcbgcensus)"
 
-
+#2021-06-28
 
 DATABASE = 'stg-authdatadb'
 TABLE='sgcbgcensus'
@@ -13,11 +13,11 @@ output='s3://stg-hsr-athena/bri-refactor/Sourav_test_athena/docker_github_action
 
 def lambda_handler(event, context):
     
-    #STATE=event['state']
-    #DATE=event['date']
+    STATE=event['state'].lower()
+    DATE=event['date']
     
-    #print(STATE)
-    #print(DATE)
+    print(STATE)
+    print(DATE)
 
     #query = """ SELECT * FROM "stg-authdatadb"."sgcbgcensus" """
     query=("SELECT b.number_devices_residing,"
@@ -26,8 +26,8 @@ def lambda_handler(event, context):
     "b.date_range_start "
     f"""FROM "{DATABASE}"."{TABLE}" c """
     f"""LEFT OUTER JOIN "{DATABASE}"."{TABLE2}" b ON lpad(replace(c.census_block_group, '.0'), 12, '0') = lpad(replace(replace(b.census_block_group, 'CA:',''), '.0', ''), 12, '0') """
-    "WHERE b.region = 'md' "
-    "and lpad(b.date_range_start, 10, '0') = '2021-06-28'")
+    f"""WHERE b.region = '{STATE}' """
+    f"""and lpad(b.date_range_start, 10, '0') = '{DATE}' """)
     
     print(query)
 
