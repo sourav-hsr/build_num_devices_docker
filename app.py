@@ -9,6 +9,8 @@ DATABASE = 'stg-authdatadb'
 TABLE='sgcbgcensus'
 TABLE2='home_panel_summary'
 
+
+
 output='s3://stg-hsr-athena/bri-refactor/Sourav_test_athena/docker_github_actions_results/'
 
 def lambda_handler(event, context):
